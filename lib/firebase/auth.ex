@@ -26,7 +26,7 @@ defmodule Firebase.Auth do
   def refresh_to_id_token(token) when is_binary(token) do
     HTTPoison.post(url_refresh_to_id_token(), encode_refresh_to_id_token(token), [{"Content-Type", "application/x-www-form-urlencoded"}])
   end
-
+  
   def url_refresh_to_id_token do
     "https://securetoken.googleapis.com/v1/token?key=" <> System.get_env("FIREBASE")
   end
@@ -37,5 +37,16 @@ defmodule Firebase.Auth do
     token
   end
 
-  
+  def url_signup_with_email do
+    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" <> System.get_env("FIREBASE")
+  end
+
+  defp encode_signup_with_email(email, password) do
+    {:ok, attrs} = Poison.encode(%{"email" => email, "password" => password, "returnSecureToken" => @returnSecureToken})
+    attrs
+  end
+
+  def signup_with_email(email, password) do
+    HTTPoison.post(url_signup_with_email(), encode_signup_with_email(email, password), @headers)
+  end
 end
