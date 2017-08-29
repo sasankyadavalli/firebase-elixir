@@ -37,7 +37,7 @@ defmodule Firebase.Auth do
     token
   end
 
-  def url_signup_with_email do
+  defp url_signup_with_email do
     "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" <> System.get_env("FIREBASE")
   end
 
@@ -48,5 +48,100 @@ defmodule Firebase.Auth do
 
   def signup_with_email(email, password) do
     HTTPoison.post(url_signup_with_email(), encode_signup_with_email(email, password), @headers)
+  end
+
+  defp url_signin_with_email do
+    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" <> System.get_env("FIREBASE")
+  end
+
+  defp encode_signin_with_email(email, password) do
+    {:ok, attrs} = Poison.encode(%{"email" => email, "password" => password, "returnSecureToken" => @returnSecureToken})
+    attrs
+  end
+
+  def signin_with_email(email, password) do
+    HTTPoison.post(url_signin_with_email(), encode_signin_with_email(email, password), @headers)
+  end
+
+  defp url_signin_anonymously do
+    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" <> System.get_env("FIREBASE")
+  end
+
+  defp encode_signin_anonymously() do
+    {:ok, attrs} = Poison.encode(%{"returnSecureToken" => @returnSecureToken})
+
+    attrs
+  end
+
+  def signin_anonymously() do
+    HTTPoison.post(url_signin_anonymously(), encode_signin_anonymously(), @headers)
+  end
+
+  defp url_send_password_reset do
+    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key=" <> System.get_env("FIREBASE")
+  end
+
+  defp encode_send_password_reset(email) do
+    {:ok, attrs} = Poison.encode(%{"email" => email, "requestType" => "PASSWORD_RESET"})
+
+    attrs
+  end
+
+  def send_password_reset(email) do
+    HTTPoison.post(url_send_password_reset(), encode_send_password_reset(email), @headers)
+  end
+
+  defp url_verify_password_reset() do
+    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/resetPassword?key=" <> System.get_env("FIREBASE")
+  end
+
+  defp encode_verify_password_reset(code) do
+    {:ok, attrs} = Poison.encode(%{"oobCode" => code})
+
+    attrs
+  end
+
+  def verify_password_reset(code) do
+    HTTPoison.post(url_verify_password_reset(), encode_verify_password_reset(code), @headers)
+  end
+
+  defp url_confirm_password_reset do
+    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/resetPassword?key=" <> System.get_env("FIREBASE")
+  end
+
+  defp encode_confirm_password_reset(code, new_password) do
+    {:ok, attrs} = Poison.encode(%{"oobCode" => code, "newPassword" => new_password})
+    attrs
+  end
+
+  def confirm_password_reset(code, new_password) do
+    HTTPoison.post(url_confirm_password_reset(), encode_confirm_password_reset(code, new_password), @headers)
+  end
+
+  defp url_change_email do
+    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/setAccountInfo?key=" <> System.get_env("FIREBASE")
+  end
+
+  defp encode_change_email(token, email) do
+    {:ok, attrs} = Poison.encode(%{"idToken" => token, "email" => email, "returnSecureToken" => @returnSecureToken})
+
+    attrs
+  end
+
+  def change_email(token, email) do
+    HTTPoison.post(url_change_email(), encode_change_email(token, email), @headers)
+  end
+
+  defp url_change_password do
+    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/setAccountInfo?key=" <> System.get_env("FIREBASE")
+  end
+
+  defp encode_change_password(token, password) do
+    {:ok, attrs} = Poison.encode(%{"idToken" => token, "password" => password, "returnSecureToken" => @returnSecureToken})
+    attrs
+  end
+
+  def change_password(token, password) do
+    HTTPoison.post(url_change_password(), encode_change_password(token, password), @headers)
   end
 end
