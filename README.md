@@ -1,3 +1,5 @@
+[![Build Status](https://semaphoreci.com/api/v1/sasank92/firebase-elixir-3/branches/develop/badge.svg)](https://semaphoreci.com/sasank92/firebase-elixir-3)
+[![Coverage Status](https://coveralls.io/repos/github/sasankyadavalli/firebase-elixir/badge.svg?branch=develop)](https://coveralls.io/github/sasankyadavalli/firebase-elixir)
 # Firebase
 
 **TODO: Add description**
