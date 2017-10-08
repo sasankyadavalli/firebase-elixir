@@ -152,4 +152,8 @@ defmodule Firebase.Helper do
   def change_password(token, password) do
     HTTPoison.post(url_change_password(), encode_change_password(token, password), @headers)
   end
+
+  defp url_update_profile do
+    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/setAccountInfo?key=" <> System.get_env("FIREBASE")
+  end
 end

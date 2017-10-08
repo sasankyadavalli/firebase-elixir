@@ -26,5 +26,9 @@ use Mix.Config
 # by uncommenting the line below and defining dev.exs, test.exs and such.
 # Configuration from the imported file will override the ones defined
 # here (which is why it is important to import them last).
-#
+config :msg91, Msg91,
+  authkey: System.get_env("MSG91_APIKEY"),
+  sender: "TESTMG",
+  route: 4,
+  country_code: 91
 #     import_config "#{Mix.env}.exs"

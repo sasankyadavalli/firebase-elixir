@@ -25,7 +25,8 @@ defmodule Firebase.Mixfile do
       {:poison, "~> 3.1"},
       {:faker, "~> 0.8"},
       {:excoveralls, "~> 0.7", only: :test},
-      {:credo, "~> 0.8", only: [:dev, :test], runtime: false}
+      {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
+      {:msg91, git: "https://github.com/sasankyadavalli/msg91"},
     ]
   end
 end

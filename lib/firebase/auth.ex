@@ -3,6 +3,6 @@ defmodule Firebase.Auth do
 
   @returnSecureToken true
   @headers [{"Content-Type", "application/json"}]
-  
-  defstruct status_code: nil, body: nil, headers: [], request_url: nil  
+
+  defstruct status_code: nil, body: nil, headers: [], request_url: nil
 end
